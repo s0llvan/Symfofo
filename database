@@ -1,0 +1,7 @@
+rm migrations/*.php
+rm public/uploads/pictures/*
+bin/console doctrine:database:drop --force
+bin/console doctrine:database:create
+bin/console make:migration
+bin/console doctrine:migrations:migrate -n
+bin/console doctrine:fixtures:load -n

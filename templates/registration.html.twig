@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block stylesheets %}
+{{ encore_entry_link_tags('registration') }}
+{% endblock %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('registration') }}
+{% endblock %}
+
+{% form_theme form 'form_layout.html.twig' %}
+
+{% block body %}
+<div class="ui middle aligned center aligned grid">
+	<div class="column">
+		<h2 class="ui image header">
+			<div class="content">
+				Register
+			</div>
+		</h2>
+		{{ form_start(form, {'attr': {'class': 'ui large form'}}) }}
+		<div class="ui stacked segment left aligned">
+			{{ form_widget(form.username) }}
+			
+			{{ form_widget(form.email) }}
+			
+			{{ form_widget(form.password) }}
+			
+			{{ form_widget(form.captcha) }}
+			
+			{% set errors = [] %}
+			{% for child in form.children %}
+			{% if child.vars.errors is defined %}
+			{% for error in child.vars.errors %}
+			{% set errors = errors|merge([error.message]) %}
+			{% endfor %}
+			{% endif %}
+			{% endfor %}
+			
+			{% if app.flashes('error')|length > 0 %}
+			<div class="ui form error field">
+				<div class="ui error message">
+					{% for message in app.flashes('error') %}
+					<p>{{ message }}</p>
+					{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+			
+			{% for message in app.flashes('success') %}
+			<div class="ui form success field">
+				<div class="ui success message">
+					<p>{{ message }}</p>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		{{ form_end(form) }}
+		
+		<div class="ui message">
+			<a href="{{ path('login') }}" class="left aligned">Sign In</a>
+		</div>
+	</div>
+</div>
+{% endblock %}
