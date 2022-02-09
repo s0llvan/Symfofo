@@ -1,0 +1,12 @@
+{% set route = app.request.attributes.get('_route') %}
+
+<div class="four wide column">
+	<div class="ui vertical fluid tabular menu">
+		<a href="{{ path('admin') }}" class="{% if route == 'admin' %}active {% endif %} item">
+			Dashboard
+		</a>
+		<a href="{{ path('admin_user') }}" class="{% if route == 'admin_user' %}active {% endif %} item">
+			Users
+		</a>
+	</div>
+</div>

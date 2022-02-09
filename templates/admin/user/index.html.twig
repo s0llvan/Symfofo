@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+<div class="ui grid">
+	{{ render(controller(
+		'App\\Controller\\AdminController::nav'))
+	}}
+	<div class="twelve wide stretched column">
+		<div class="ui segment">
+			<table class="ui basic table stackable striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Username</th>
+						<th>Email</th>
+						<th class="center aligned">Role</th>
+						<th class="right aligned">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+					<tr>
+						<td>{{ user.id }}</td>
+						<td>{{ user.username }}</td>
+						<td>
+							{% if is_granted("ROLE_MOD") %}
+							{{ user.email }}
+							{% endif %}
+						</td>
+						<td class="center aligned">{{ user.role.name|upper }}</td>
+						<td class="right aligned">
+							{% if is_granted("ROLE_MOD") %}
+							<a href="{{ path('admin_user_edit', {'id': user.id}) }}">
+								<i class="pencil alternate icon"></i>
+							</a>
+							{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

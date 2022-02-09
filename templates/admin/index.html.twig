@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+<div class="ui grid">
+	{{ render(controller(
+		'App\\Controller\\AdminController::nav'))
+	}}
+	<div class="twelve wide stretched column">
+		<div class="ui segment">
+			
+		</div>
+	</div>
+</div>
+{% endblock %}
