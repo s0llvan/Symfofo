@@ -25,7 +25,7 @@ class RegistrationController extends AbstractController
 	/**
 	* @Route("/register", name="registration")
 	*/
-	public function registerAction(Request $request, UserPasswordHasherInterface $passwordEncoder, EventDispatcherInterface $eventDispatcher, MailerInterface $mailer, RoleRepository $roleRepository, ManagerRegistry $managerRegistry)
+	public function registerAction(Request $request, UserPasswordHasherInterface $passwordEncoder, EventDispatcherInterface $eventDispatcher, MailerInterface $mailer, RoleRepository $roleRepository, ManagerRegistry $managerRegistry): Response
 	{
 		$entityManager = $managerRegistry->getManager();
 		
@@ -98,7 +98,7 @@ class RegistrationController extends AbstractController
 	/**
 	* @Route("/register-confirmation/{token}", name="registration_confirmation")
 	*/
-	public function registerConfirmationAction(Request $request, $token, UserRepository $userRepository, ManagerRegistry $managerRegistry)
+	public function registerConfirmationAction(Request $request, $token, UserRepository $userRepository, ManagerRegistry $managerRegistry): Response
 	{
 		if ($user = $userRepository->findOneBy(['emailConfirmationToken' => $token])) {
 			

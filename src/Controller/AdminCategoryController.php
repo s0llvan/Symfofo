@@ -45,7 +45,7 @@ class AdminCategoryController extends AbstractController
 	/**
 	* @Route("/admin/categories/{id}/edit", name="admin_category_edit")
 	*/
-	public function edit(Request $request, Category $category)
+	public function edit(Request $request, Category $category): Response
 	{
 		$form = $this->createForm(CategoryAdminType::class, $category, [
 			'parent' => $category->getParent() != null
@@ -69,7 +69,7 @@ class AdminCategoryController extends AbstractController
 	/**
 	* @Route("/admin/categories/{id}", name="admin_category_show")
 	*/
-	public function show(Request $request, Category $category)
+	public function show(Request $request, Category $category): Response
 	{
 		$newCategory = new Category();
 		$newCategory->setParent($category);
@@ -92,7 +92,7 @@ class AdminCategoryController extends AbstractController
 	/**
 	* @Route("/admin/categories/{id}/delete", name="admin_category_delete")
 	*/
-	public function delete(Request $request, CategoryRepository $categoryRepository, Category $category)
+	public function delete(Request $request, CategoryRepository $categoryRepository, Category $category): Response
 	{
 		if($category->getParent() == null) {
 			foreach($categoryRepository->findBy(['parent' => $category]) as $subcategory) {

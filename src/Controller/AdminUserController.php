@@ -33,7 +33,7 @@ class AdminUserController extends AbstractController
 	/**
 	 * @Route("/admin/users/{id}", name="admin_user_edit")
 	 */
-	public function edit(Request $request, User $user)
+	public function edit(Request $request, User $user): Response
 	{
 		$form = $this->createForm(UserAdminType::class, $user, [
 			'super_admin' => $this->isGranted('ROLE_SUPER_ADMIN')
@@ -57,7 +57,7 @@ class AdminUserController extends AbstractController
 	/**
 	 * @Route("/admin/users/{id}/delete", name="admin_user_delete")
 	 */
-	public function delete(User $user)
+	public function delete(User $user): Response
 	{
 		$this->managerRegistry->getManager()->remove($user);
 		$this->managerRegistry->getManager()->flush();

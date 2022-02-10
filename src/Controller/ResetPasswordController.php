@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Defuse\Crypto\KeyProtectedByPassword;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -28,7 +29,7 @@ class ResetPasswordController extends AbstractController
 	/**
 	* @Route("/reset-password", name="reset_password")
 	*/
-	public function index(Request $request, UserRepository $userRepository, ManagerRegistry $managerRegistry)
+	public function index(Request $request, UserRepository $userRepository, ManagerRegistry $managerRegistry): Response
 	{
 		$session = $request->getSession();
 		$form = $this->createForm(ResetPasswordType::class);
@@ -93,7 +94,7 @@ class ResetPasswordController extends AbstractController
 	/**
 	* @Route("/reset-password/{token}", name="reset_password_confirmation")
 	*/
-	public function registerConfirmationAction(Request $request, string $token, UserRepository $userRepository, UserPasswordHasherInterface $passwordEncoder, ManagerRegistry $managerRegistry)
+	public function registerConfirmationAction(Request $request, string $token, UserRepository $userRepository, UserPasswordHasherInterface $passwordEncoder, ManagerRegistry $managerRegistry): Response
 	{
 		if (!$user = $userRepository->findOneBy([
 			'passwordResetToken' => $token

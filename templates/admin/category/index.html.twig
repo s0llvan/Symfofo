@@ -9,6 +9,7 @@
 	{{ render(controller('App\\Controller\\AdminController::nav')) }}
 	<div class="twelve wide stretched column">
 		<div class="ui segment">
+			<h2>Create category</h2>
 			{{ form_start(form, {'attr': {'class': 'ui form'}}) }}
 			{{ form_widget(form.name) }}
 			{{ form_widget(form.description) }}
