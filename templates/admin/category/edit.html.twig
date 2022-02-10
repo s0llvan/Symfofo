@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% form_theme form 'form_layout.html.twig' %}
+
+{% block body %}
+<div class="ui grid">
+	{{ render(controller('App\\Controller\\AdminController::nav')) }}
+	<div class="twelve wide stretched column">
+		<div class="ui segment">
+			{{ form_start(form, {'attr': {'class': 'ui form'}}) }}
+			{{ form_widget(form.name) }}
+			{{ form_widget(form.description) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div>
+{% endblock %}

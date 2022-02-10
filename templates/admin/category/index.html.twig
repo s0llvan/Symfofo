@@ -2,38 +2,43 @@
 
 {% block title %}Administration{% endblock %}
 
+{% form_theme form 'form_layout.html.twig' %}
+
 {% block body %}
 <div class="ui grid">
 	{{ render(controller('App\\Controller\\AdminController::nav')) }}
 	<div class="twelve wide stretched column">
 		<div class="ui segment">
+			{{ form_start(form, {'attr': {'class': 'ui form'}}) }}
+			{{ form_widget(form.name) }}
+			{{ form_widget(form.description) }}
+			{{ form_end(form) }}
+		</div>
+		<div class="ui segment">
 			<table class="ui basic table stackable striped">
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Username</th>
-						<th>Email</th>
-						<th class="center aligned">Role</th>
+						<th>Name</th>
 						<th class="right aligned">Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for user in users %}
+					{% for category in categories %}
 					<tr>
-						<td>{{ user.id }}</td>
-						<td>{{ user.username }}</td>
+						<td>{{ category.id }}</td>
 						<td>
-							{% if is_granted("ROLE_MOD") %}
-							{{ user.email }}
-							{% endif %}
+							<a href="{{ path('admin_category_show', {'id': category.id}) }}">
+								{{ category.name }}
+							</a>
 						</td>
-						<td class="center aligned">{{ user.role.name|upper }}</td>
 						<td class="right aligned">
-							{% if is_granted("ROLE_MOD") %}
-							<a href="{{ path('admin_user_edit', {'id': user.id}) }}">
+							<a href="{{ path('admin_category_edit', {'id': category.id}) }}">
 								<i class="pencil alternate icon"></i>
 							</a>
-							{% endif %}
+							<a href="{{ path('admin_category_delete', {'id': category.id}) }}">
+								<i class="trash alternate outline icon"></i>
+							</a>
 						</td>
 					</tr>
 					{% endfor %}

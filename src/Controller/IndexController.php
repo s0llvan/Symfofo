@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -21,9 +22,9 @@ class IndexController extends AbstractController
 	/**
 	* @Route("/", name="index")
 	*/
-	public function index(): Response
+	public function index(CategoryRepository $categoryRepository): Response
 	{
-		$email = (new Email())
+		/* $email = (new Email())
 		->from('no-reply@example.com') 
 		->to('user@example.com') 
 		->subject('I love Me')
@@ -33,10 +34,10 @@ class IndexController extends AbstractController
 			$this->mailer->send($email);
 		} catch (TransportExceptionInterface $e) {
 			dump($e);
-		}
+		} */
 		
 		return $this->render('index.html.twig', [
-			'controller_name' => 'IndexController',
+			'categories' => $categoryRepository->findBy(['parent' => null]),
 		]);
 	}
 }
