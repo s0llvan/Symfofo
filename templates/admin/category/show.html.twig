@@ -1,48 +1,45 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}Administration{% endblock %}
 
 {% form_theme form 'form_layout.html.twig' %}
 
-{% block body %}
-<div class="ui grid">
-	{{ render(controller('App\\Controller\\AdminController::nav')) }}
-	<div class="twelve wide stretched column">
-		<h2>{{ category.name }}</h2>
-		<div class="ui segment">
-			<h3>Create subcategory</h3>
-			{{ form_start(form, {'attr': {'class': 'ui form'}}) }}
-			{{ form_widget(form.name) }}
-			{{ form_widget(form.description) }}
-			{{ form_end(form) }}
-		</div>
-		<div class="ui segment">
-			<table class="ui basic table stackable striped">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th class="right aligned">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for subcategory in category.categories %}
-					<tr>
-						<td>{{ subcategory.id }}</td>
-						<td>{{ subcategory.name }}</td>
-						<td class="right aligned">
-							<a href="{{ path('admin_category_edit', {'id': subcategory.id}) }}">
-								<i class="pencil alternate icon"></i>
-							</a>
-							<a href="{{ path('admin_category_delete', {'id': subcategory.id}) }}">
-								<i class="trash alternate outline icon"></i>
-							</a>
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
+{% block subbody %}
+<div class="twelve wide stretched column">
+	<h2>{{ category.name }}</h2>
+	<div class="ui segment">
+		<h3>Create subcategory</h3>
+		{{ form_start(form, {'attr': {'class': 'ui form'}}) }}
+		{{ form_widget(form.name) }}
+		{{ form_widget(form.description) }}
+		{{ form_end(form) }}
+	</div>
+	<div class="ui segment">
+		<table class="ui basic table stackable striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th class="right aligned">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for subcategory in category.categories %}
+				<tr>
+					<td>{{ subcategory.id }}</td>
+					<td>{{ subcategory.name }}</td>
+					<td class="right aligned">
+						<a href="{{ path('admin_category_edit', {'id': subcategory.id}) }}">
+							<i class="pencil alternate icon"></i>
+						</a>
+						<a href="{{ path('admin_category_delete', {'id': subcategory.id}) }}">
+							<i class="trash alternate outline icon"></i>
+						</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
 </div>
 {% endblock %}
