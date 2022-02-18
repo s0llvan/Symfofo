@@ -27,7 +27,9 @@
 		</div>
 		<div class="six wide column">
 			<div class="row">
-				{{ topic.title }}
+				<a href="{{ path('topic', {'id': topic.id}) }}">
+					{{ topic.title }}
+				</a>
 			</div>
 			<div class="row">
 				{{ topic.createdAt|date("H:s d M Y")}}
