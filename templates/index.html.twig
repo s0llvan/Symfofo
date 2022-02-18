@@ -24,7 +24,7 @@
 		<div class="four wide column">
 			<div class="row">
 				<h5>
-					<a>{{ subCategory.name }}</a>
+					<a href="{{ path('category', {'id': subCategory.id}) }}">{{ subCategory.name }}</a>
 				</h5>
 			</div>
 			<div class="row">
@@ -33,11 +33,11 @@
 		</div>
 		<div class="one wide column"></div>
 		<div class="sixteen wide mobile eight wide tablet three wide computer column">
-			<div class="row">0</div>
+			<div class="row">{{ subCategory.topics|length }}</div>
 			<div class="row">Topics</div>
 		</div>
 		<div class="sixteen wide mobile eight wide tablet three wide computer column">
-			<div class="row">0</div>
+			<div class="row">{{ subCategory.posts|length }}</div>
 			<div class="row">Messages</div>
 		</div>
 		<div class="three wide column right aligned">

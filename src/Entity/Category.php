@@ -39,9 +39,15 @@ class Category
      */
     private $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Topic::class, mappedBy="category", orphanRemoval=true)
+     */
+    private $topics;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->topics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,4 +120,45 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @return Collection|Topic[]
+     */
+    public function getTopics(): Collection
+    {
+        return $this->topics;
+    }
+
+    public function addTopic(Topic $topic): self
+    {
+        if (!$this->topics->contains($topic)) {
+            $this->topics[] = $topic;
+            $topic->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTopic(Topic $topic): self
+    {
+        if ($this->topics->removeElement($topic)) {
+            // set the owning side to null (unless already changed)
+            if ($topic->getCategory() === $this) {
+                $topic->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+	public function getPosts(): Collection
+	{
+		$posts = new ArrayCollection();
+		foreach($this->topics as $topic) {
+			$posts = new ArrayCollection(
+				array_merge($topic->getPosts()->toArray(), $posts->toArray())
+			);
+		}
+		return $posts;
+	}
 }

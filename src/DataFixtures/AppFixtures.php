@@ -3,7 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Entity\Post;
 use App\Entity\Role;
+use App\Entity\Topic;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -39,8 +41,10 @@ class AppFixtures extends Fixture
 			
 			$rolesTab[] = $role;
 		}
-		
-		$users = [
+	
+		$users = [];
+
+		$userList = [
 			'superadmin' => 'superadmin@local.host',
 			'admin' => 'admin@local.host',
 			'mod' => 'mod@local.host',
@@ -49,7 +53,7 @@ class AppFixtures extends Fixture
 		
 		$i = 0;
 		
-		foreach ($users as $username => $email) {
+		foreach ($userList as $username => $email) {
 			$user = new User();
 			$user->setUsername($username);
 			$user->setPassword($this->passwordEncoder->hashPassword($user, 'password'));
@@ -60,6 +64,8 @@ class AppFixtures extends Fixture
 			$manager->persist($user);
 			
 			$i++;
+
+			$users[] = $user;
 		}
 		
 		$parentCategories = [];
@@ -84,6 +90,25 @@ class AppFixtures extends Fixture
 				$category->setParent($parentCategory);
 				
 				$manager->persist($category);
+				
+				for ($a=0; $a < rand(3,6); $a++) { 
+					$topic = new Topic();
+					$topic->setCategory($category);
+					$topic->setTitle($faker->sentence());
+					$topic->setMessage($faker->sentence(24));
+					$topic->setAuthor($users[rand(0,3)]);
+					
+					$manager->persist($topic);
+					
+					for ($u=0; $u < 12; $u++) { 
+						$post = new Post();
+						$post->setMessage($faker->sentence(24));
+						$post->setTopic($topic);
+						$post->setAuthor($users[rand(0,3)]);
+
+						$manager->persist($post);
+					}
+				}
 			}
 		}
 		
