@@ -34,8 +34,8 @@
 			<div class="row">
 				{{ topic.createdAt|date("H:s d M Y")}}
 			</div>
-			<div class="row" *ngIf="topic.User">
-				?
+			<div class="row">
+				{{ topic.author.username }}
 			</div>
 		</div>
 		<div class="two wide column middle aligned">

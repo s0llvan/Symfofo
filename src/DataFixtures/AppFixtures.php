@@ -100,7 +100,7 @@ class AppFixtures extends Fixture
 					
 					$manager->persist($topic);
 					
-					for ($u=0; $u < 12; $u++) { 
+					for ($u=0; $u < rand(4,12); $u++) { 
 						$post = new Post();
 						$post->setMessage($faker->sentence(24));
 						$post->setTopic($topic);
