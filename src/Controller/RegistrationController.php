@@ -25,7 +25,7 @@ class RegistrationController extends AbstractController
 	/**
 	* @Route("/register", name="registration")
 	*/
-	public function registerAction(Request $request, UserPasswordHasherInterface $passwordEncoder, EventDispatcherInterface $eventDispatcher, MailerInterface $mailer, RoleRepository $roleRepository, ManagerRegistry $managerRegistry): Response
+	public function registerAction(Request $request, UserPasswordHasherInterface $passwordEncoder, EventDispatcherInterface $eventDispatcher, MailerInterface $mailer, RoleRepository $roleRepository, ManagerRegistry $managerRegistry)
 	{
 		$entityManager = $managerRegistry->getManager();
 		
