@@ -19,7 +19,7 @@ class UserAdminType extends AbstractType
 		$builder
 			->add('username', TextType::class)
 			->add('email', EmailType::class);
-		if($options['super_admin']) {
+		if($options['role']) {
 			$builder->add('role', EntityType::class, [
 				'class' => Role::class,
 				'choice_label' => 'name'
@@ -36,7 +36,7 @@ class UserAdminType extends AbstractType
 	{
 		$resolver->setDefaults([
 			'data_class' => User::class,
-			'super_admin' => false
+			'role' => false
 		]);
 	}
 }

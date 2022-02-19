@@ -14,54 +14,56 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminUserController extends AbstractController
 {
 	private $managerRegistry;
-
+	
 	public function __construct(ManagerRegistry $managerRegistry)
 	{
 		$this->managerRegistry = $managerRegistry;
 	}
-
-    /**
-     * @Route("/admin/users", name="admin_user")
-     */
-    public function index(UserRepository $userRepository): Response
-    {
-        return $this->render('admin/user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
-    }
-
+	
 	/**
-	 * @Route("/admin/users/{id}", name="admin_user_edit")
-	 */
+	* @Route("/admin/users", name="admin_user")
+	*/
+	public function index(UserRepository $userRepository): Response
+	{
+		return $this->render('admin/user/index.html.twig', [
+			'users' => $userRepository->findAll(),
+		]);
+	}
+	
+	/**
+	* @Route("/admin/users/{id}", name="admin_user_edit")
+	*/
 	public function edit(Request $request, User $user): Response
 	{
 		$form = $this->createForm(UserAdminType::class, $user, [
-			'super_admin' => $this->isGranted('ROLE_SUPER_ADMIN')
+			'role' => $this->isGranted('ROLE_SUPER_ADMIN')
+			|| ($user->getRole()->getSlug() == 'ROLE_MOD' && $this->isGranted('ROLE_ADMIN'))
+			|| ($user->getRole()->getSlug() == 'ROLE_USER' && $this->isGranted('ROLE_MOD'))
 		]);
 		$form->handleRequest($request);
-
+		
 		// Check if form is submitted and valid
 		if ($form->isSubmitted() && $form->isValid()) {
-
+			
 			$this->managerRegistry->getManager()->flush();
-
+			
 			$this->addFlash('success', 'Informations saved');
 		}
-
+		
 		return $this->render('admin/user/edit.html.twig', [
 			'form' => $form->createView(),
 			'user' => $user
 		]);
 	}
-
+	
 	/**
-	 * @Route("/admin/users/{id}/delete", name="admin_user_delete")
-	 */
+	* @Route("/admin/users/{id}/delete", name="admin_user_delete")
+	*/
 	public function delete(User $user): Response
 	{
 		$this->managerRegistry->getManager()->remove($user);
 		$this->managerRegistry->getManager()->flush();
-
+		
 		return $this->redirectToRoute('admin_user');
 	}
 }
