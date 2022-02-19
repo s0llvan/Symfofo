@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserAdminType;
+use App\Form\UserCreateAdminType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminUserController extends AbstractController
@@ -31,7 +33,7 @@ class AdminUserController extends AbstractController
 	}
 	
 	/**
-	* @Route("/admin/users/{id}", name="admin_user_edit")
+	* @Route("/admin/users/{id}", name="admin_user_edit", requirements={"id"="\d+"})
 	*/
 	public function edit(Request $request, User $user): Response
 	{
@@ -53,6 +55,33 @@ class AdminUserController extends AbstractController
 		return $this->render('admin/user/edit.html.twig', [
 			'form' => $form->createView(),
 			'user' => $user
+		]);
+	}
+	
+	/**
+	* @Route("/admin/users/create", name="admin_user_create")
+	*/
+	public function create(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface): Response
+	{
+		$user = new User();
+		
+		$form = $this->createForm(UserCreateAdminType::class, $user);
+		$form->handleRequest($request);
+		
+		// Check if form is submitted and valid
+		if ($form->isSubmitted() && $form->isValid()) {
+			
+			$user->setPassword($userPasswordHasherInterface->hashPassword($user, $form->get('password')->getData()));
+			$user->setEmailConfirmed(true);
+			
+			$this->managerRegistry->getManager()->persist($user);
+			$this->managerRegistry->getManager()->flush();
+			
+			$this->addFlash('success', 'Informations saved');
+		}
+		
+		return $this->render('admin/user/create.html.twig', [
+			'form' => $form->createView()
 		]);
 	}
 	
