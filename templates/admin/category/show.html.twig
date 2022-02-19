@@ -6,13 +6,9 @@
 
 {% block subbody %}
 <h3>{{ category.name }}</h3>
-<div class="ui segment">
-	<h4>Create subcategory</h4>
-	{{ form_start(form, {'attr': {'class': 'ui form'}}) }}
-	{{ form_widget(form.name) }}
-	{{ form_widget(form.description) }}
-	{{ form_end(form) }}
-</div>
+<a class="ui button" href="{{ path('admin_category_create', {'id': category.id}) }}">
+	Create
+</a>
 <table class="ui basic table stackable striped">
 	<thead>
 		<tr>

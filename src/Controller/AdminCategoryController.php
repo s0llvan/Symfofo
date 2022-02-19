@@ -41,6 +41,36 @@ class AdminCategoryController extends AbstractController
 			'form' => $form->createView()
 		]);
 	}
+
+	/**
+	* @Route("/admin/categories/create/{id}", name="admin_category_create", defaults={"id": null})
+	*/
+	public function create(Request $request, Category $parentCategory = null): Response
+	{
+		$category = new Category();
+		$category->setParent($parentCategory);
+
+		$form = $this->createForm(CategoryAdminType::class, $category, [
+			'parent' => $parentCategory ? $parentCategory->getParent() == null : false
+		]);
+		$form->handleRequest($request);
+		
+		// Check if form is submitted and valid
+		if ($form->isSubmitted() && $form->isValid()) {
+			
+			$manager = $this->managerRegistry->getManager();
+			$manager->persist($category);
+			$manager->flush();
+			
+			return $this->redirectToRoute('admin_category_show', [
+				'id' => $parentCategory->getId()
+			]);
+		}
+		
+		return $this->render('admin/category/create.html.twig', [
+			'form' => $form->createView()
+		]);
+	}
 	
 	/**
 	* @Route("/admin/categories/{id}/edit", name="admin_category_edit")

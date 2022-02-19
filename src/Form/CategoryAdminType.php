@@ -18,7 +18,7 @@ class CategoryAdminType extends AbstractType
 		$builder
 		->add('name')
 		->add('description');
-		
+			
 		if($options['parent']) {
 			$builder->add('parent', EntityType::class, [
 				'class' => Category::class,
