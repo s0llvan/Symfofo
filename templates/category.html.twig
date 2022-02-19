@@ -50,6 +50,7 @@
 				<strong>Posts</strong>
 			</div>
 		</div>
+		{% if topic.lastPost %}
 		<div class="three wide column right aligned middle aligned">
 			<div class="row">
 				<strong>
@@ -60,13 +61,14 @@
 				{{ topic.lastPost.createdAt|date("H:s d M Y")}}
 			</div>
 		</div>
+		{% endif %}
 	</div>
 	{% endfor %}
 	
 	<div class="ui grid stackable">
 		<div class="sixteen wide column">
 			{% if app.user %}
-			<a class="ui button right floated" href="">
+			<a class="ui button right floated" href="{{ path('new_topic', {'id': category.id}) }}">
 				New topic
 			</a>
 			{% endif %}

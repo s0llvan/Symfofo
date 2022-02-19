@@ -43,16 +43,20 @@
 		</div>
 	</div>
 	
+	{% if app.user %}
 	<h3 class="ui header right aligned">
-		<button class="ui button" *ngIf="owner()" [routerLink]="['/topics', topic.id, 'edit']">
+		{% if app.user == topic.author %}
+		<button class="ui button">
 			<i class="pencil icon" aria-hidden="true"></i>
 			Edit
 		</button>
-		<button class="ui button" *ngIf="is_logged()" [routerLink]="['/topics', topic.id, 'new-post']">
+		{% endif %}
+		<button class="ui button">
 			<i class="reply all icon" aria-hidden="true"></i>
 			Reply
 		</button>
 	</h3>
+	{% endif %}
 	
 	{% for post in topic.posts %}
 	<div class="ui attached segment">
@@ -80,12 +84,14 @@
 			</div>
 		</div>
 		
+		{% if app.user %}
 		<h3 class="ui header right aligned">
-			<button class="ui button" *ngIf="is_logged()" [routerLink]="['/topics', topic.id, 'new-post']">
+			<button class="ui button">
 				<i class="reply all icon" aria-hidden="true"></i>
 				Reply
 			</button>
 		</h3>
+		{% endif %}
 	</div>
 	{% endfor %}
 </div>
