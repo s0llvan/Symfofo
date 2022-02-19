@@ -41,6 +41,7 @@ class Category
 
     /**
      * @ORM\OneToMany(targetEntity=Topic::class, mappedBy="category", orphanRemoval=true)
+	 * @ORM\OrderBy({"id" = "DESC"})
      */
     private $topics;
 

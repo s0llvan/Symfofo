@@ -49,6 +49,7 @@ class Topic
 	
 	/**
 	* @ORM\OneToMany(targetEntity=Post::class, mappedBy="topic", orphanRemoval=true)
+	* @ORM\OrderBy({"id" = "DESC"})
 	*/
 	private $posts;
 	
@@ -175,6 +176,11 @@ class Topic
 		}
 	}
 	
+	public function increaseView(): void
+	{
+		$this->views++;
+	}
+
 	public function getViews(): ?string
 	{
 		return $this->views;

@@ -16,9 +16,14 @@ class TopicController extends AbstractController
 	/**
 	* @Route("/topic/{id}", name="topic")
 	*/
-	public function index(Topic $topic): Response
+	public function index(ManagerRegistry $managerRegistry, Topic $topic): Response
 	{
-		return $this->render('topic.html.twig', [
+		$topic->increaseView();
+		
+		$entityManager = $managerRegistry->getManager();
+		$entityManager->flush();
+		
+		return $this->render('topic/index.html.twig', [
 			'topic' => $topic
 		]);
 	}
@@ -31,7 +36,7 @@ class TopicController extends AbstractController
 		$topic = new Topic();
 		$topic->setAuthor($this->getUser());
 		$topic->setCategory($category);
-
+		
 		$form = $this->createForm(NewTopicType::class, $topic);
 		$form->handleRequest($request);
 		
@@ -40,13 +45,13 @@ class TopicController extends AbstractController
 			$entityManager = $managerRegistry->getManager();
 			$entityManager->persist($topic);
 			$entityManager->flush();
-
+			
 			return $this->redirectToRoute('topic', [
 				'id' => $topic->getId()
 			]);
 		}
-
-		return $this->render('new_topic.html.twig', [
+		
+		return $this->render('topic/create.html.twig', [
 			'category' => $category,
 			'form' => $form->createView()
 		]);
