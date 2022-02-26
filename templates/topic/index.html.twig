@@ -58,7 +58,7 @@
 	</h3>
 	{% endif %}
 	
-	{% for post in topic.posts %}
+	{% for post in posts %}
 	<div class="ui attached segment">
 		<div class="ui grid stackable">
 			<div class="segment ui three wide column" style="margin:20px;">
@@ -94,5 +94,7 @@
 		{% endif %}
 	</div>
 	{% endfor %}
+
+	{{ knp_pagination_render(posts) }}
 </div>
 {% endblock %}

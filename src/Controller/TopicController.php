@@ -10,21 +10,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 class TopicController extends AbstractController
 {
 	/**
 	* @Route("/topic/{id}", name="topic")
 	*/
-	public function index(ManagerRegistry $managerRegistry, Topic $topic): Response
+	public function index(Request $request, ManagerRegistry $managerRegistry, PaginatorInterface $paginatorInterface, Topic $topic): Response
 	{
 		$topic->increaseView();
 		
 		$entityManager = $managerRegistry->getManager();
 		$entityManager->flush();
+
+		$posts = $paginatorInterface->paginate(
+            $topic->getPosts(),
+            $request->query->getInt('page', 1),
+            6
+        );
 		
 		return $this->render('topic/index.html.twig', [
-			'topic' => $topic
+			'topic' => $topic,
+			'posts' => $posts
 		]);
 	}
 	
