@@ -18,7 +18,7 @@
 </h4>
 
 <div class="ui attached segment">
-	{% for topic in category.topics %}
+	{% for topic in topics %}
 	<div class="ui grid stackable">
 		<div class="one wide column middle aligned">
 			<div class="ui fluid image small">
@@ -74,5 +74,7 @@
 			{% endif %}
 		</div>
 	</div>
+
+	{{ knp_pagination_render(topics) }}
 </div>
 {% endblock %}

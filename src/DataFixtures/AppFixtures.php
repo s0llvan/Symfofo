@@ -91,7 +91,7 @@ class AppFixtures extends Fixture
 				
 				$manager->persist($category);
 				
-				for ($a=0; $a < rand(3,6); $a++) { 
+				for ($a=0; $a < rand(30,60); $a++) { 
 					$topic = new Topic();
 					$topic->setCategory($category);
 					$topic->setTitle($faker->sentence());

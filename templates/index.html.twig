@@ -6,45 +6,47 @@
 <h2 class="ui header">Forum</h2>
 
 {% for category in categories %}
-<h4 class="ui top attached header inverted">
-	<div class="ui grid stackable">
-		<div class="wide column">
-			{{ category.name }}
+<div class="category">
+	<h4 class="ui top attached header inverted">
+		<div class="ui grid stackable">
+			<div class="wide column">
+				{{ category.name }}
+			</div>
+		</div>
+	</h4>
+	{% for subCategory in category.categories %}
+	<div class="ui attached segment">
+		<div class="ui grid stackable">
+			<div class="two wide column">
+				<div class="ui fluid image tiny">
+					<img src="{{ asset('build/images/square-image.png') }}" alt="Default category picture">
+				</div>
+			</div>
+			<div class="four wide column">
+				<div class="row">
+					<h5>
+						<a href="{{ path('category', {'id': subCategory.id}) }}">{{ subCategory.name }}</a>
+					</h5>
+				</div>
+				<div class="row">
+					{{ subCategory.description }}
+				</div>
+			</div>
+			<div class="one wide column"></div>
+			<div class="sixteen wide mobile eight wide tablet three wide computer column">
+				<div class="row">{{ subCategory.topics|length }}</div>
+				<div class="row">Topics</div>
+			</div>
+			<div class="sixteen wide mobile eight wide tablet three wide computer column">
+				<div class="row">{{ subCategory.posts|length }}</div>
+				<div class="row">Messages</div>
+			</div>
+			<div class="three wide column right aligned">
+				
+			</div>
 		</div>
 	</div>
-</h4>
-{% for subCategory in category.categories %}
-<div class="ui attached segment">
-	<div class="ui grid stackable">
-		<div class="two wide column">
-			<div class="ui fluid image tiny">
-				<img src="{{ asset('build/images/square-image.png') }}" alt="Default category picture">
-			</div>
-		</div>
-		<div class="four wide column">
-			<div class="row">
-				<h5>
-					<a href="{{ path('category', {'id': subCategory.id}) }}">{{ subCategory.name }}</a>
-				</h5>
-			</div>
-			<div class="row">
-				{{ subCategory.description }}
-			</div>
-		</div>
-		<div class="one wide column"></div>
-		<div class="sixteen wide mobile eight wide tablet three wide computer column">
-			<div class="row">{{ subCategory.topics|length }}</div>
-			<div class="row">Topics</div>
-		</div>
-		<div class="sixteen wide mobile eight wide tablet three wide computer column">
-			<div class="row">{{ subCategory.posts|length }}</div>
-			<div class="row">Messages</div>
-		</div>
-		<div class="three wide column right aligned">
-			
-		</div>
-	</div>
+	{% endfor %}
 </div>
-{% endfor %}
 {% endfor %}
 {% endblock %}
