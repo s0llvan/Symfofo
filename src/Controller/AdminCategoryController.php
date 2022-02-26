@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 class AdminCategoryController extends AbstractController
 {
@@ -23,7 +24,7 @@ class AdminCategoryController extends AbstractController
 	/**
 	* @Route("/admin/categories", name="admin_category")
 	*/
-	public function index(CategoryRepository $categoryRepository, Request $request): Response
+	public function index(CategoryRepository $categoryRepository, Request $request, PaginatorInterface $paginatorInterface): Response
 	{
 		$category = new Category();
 		
@@ -35,9 +36,15 @@ class AdminCategoryController extends AbstractController
 			$this->managerRegistry->getManager()->persist($category);
 			$this->managerRegistry->getManager()->flush();
 		}
+
+		$categories = $paginatorInterface->paginate(
+            $categoryRepository->findBy(['parent' => null]),
+            $request->query->getInt('page', 1),
+            10
+        );
 		
 		return $this->render('admin/category/index.html.twig', [
-			'categories' => $categoryRepository->findBy(['parent' => null]),
+			'categories' => $categories,
 			'form' => $form->createView()
 		]);
 	}

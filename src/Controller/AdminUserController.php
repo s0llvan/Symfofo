@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 class AdminUserController extends AbstractController
 {
@@ -25,10 +26,16 @@ class AdminUserController extends AbstractController
 	/**
 	* @Route("/admin/users", name="admin_user")
 	*/
-	public function index(UserRepository $userRepository): Response
+	public function index(Request $request, UserRepository $userRepository, PaginatorInterface $paginatorInterface): Response
 	{
+		$users = $paginatorInterface->paginate(
+            $userRepository->findAll(),
+            $request->query->getInt('page', 1),
+            10
+        );
+
 		return $this->render('admin/user/index.html.twig', [
-			'users' => $userRepository->findAll(),
+			'users' => $users,
 		]);
 	}
 	

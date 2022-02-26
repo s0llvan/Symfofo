@@ -39,4 +39,8 @@
 		{% endfor %}
 	</tbody>
 </table>
+
+{% if users|length > 10 %}
+{{ knp_pagination_render(users) }}
+{% endif %}
 {% endblock %}
