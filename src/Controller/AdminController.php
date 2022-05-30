@@ -18,9 +18,4 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
-
-    public function nav(Request $request): Response
-    {
-        return $this->render('admin/nav.html.twig');
-    }
 }
