@@ -106,7 +106,7 @@ class AdminCategoryController extends AbstractController
 	/**
 	* @Route("/admin/categories/{id}", name="admin_category_show")
 	*/
-	public function show(Request $request, Category $category): Response
+	public function show(Request $request, Category $category, PaginatorInterface $paginatorInterface): Response
 	{
 		$newCategory = new Category();
 		$newCategory->setParent($category);

@@ -1,63 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>{% block title %}Welcome!{% endblock %}</title>
-	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-
-	{{ encore_entry_link_tags('app') }}
-	{% block stylesheets %}{% endblock %}
-	
-	{{ encore_entry_script_tags('app') }}
-	
-	{% block javascripts %}	{% endblock %}
+    <meta charset="UTF-8">
+    <title>{% block title %}Symfofo{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    
+    {{ encore_entry_link_tags('app') }}
+    {% block stylesheets %}{% endblock %}
+    
+    {{ encore_entry_script_tags('app') }}
+    
+    {% block javascripts %}	{% endblock %}
 </head>
 <body>
-	<div class="ui fixed inverted menu">
-		<div class="ui container">
-			<a href="#" class="item header">
-				Symfofo
-			</a>
-			
-			<a  href="{{ path('index') }}" class="item">
-				<i class="file alternate icon" aria-hidden="true"></i>
-				Forums
-			</a>
-			<div class="right menu">
-				{% if app.user %}
-				{% if is_granted("ROLE_ADMIN") %}
-				<a class="item" href="{{ path('admin') }}">
-					<i class="cogs icon"></i>
-					Administration
-				</a>
-				{% endif %}
-
+    <div class="ui fixed inverted menu">
+        <div class="ui container">
+            <a href="#" class="item header">
+                Symfofo
+            </a>
+            
+            <a  href="{{ path('index') }}" class="item">
+                <i class="file alternate icon" aria-hidden="true"></i>
+                Forums
+            </a>
+            <div class="right menu">
+                {% if app.user %}
+                {% if is_granted("ROLE_ADMIN") %}
+                <div class="ui simple dropdown item right">
+                    <i class="wrench icon" aria-hidden="true"></i> Administration <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="{{ path('admin') }}">
+                            <i class="tachometer alternate icon" aria-hidden="true"></i>
+                            Dashboard
+                        </a>
+                        <a class="item" href="{{ path('admin_user') }}">
+                            <i class="users icon" aria-hidden="true"></i>
+                            Users
+                        </a>
+                        <a class="item" href="{{ path('admin_category') }}">
+                            <i class="folder icon" aria-hidden="true"></i>
+                            Categories
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                
                 <a class="item" href="{{ path('profile') }}">
-					<i class="user icon"></i>
-					Profile
-				</a>
-				
-				<a href="{{ path('logout') }}" class="item right">
-					<i class="sign in icon" aria-hidden="true"></i>
-					Logout
-				</a>
-				{% else %}
-				<a href="{{ path('registration') }}" class="item right">
-					<i class="user plus icon" aria-hidden="true"></i>
-					Register
-				</a>
-				
-				<a href="{{ path('login') }}" class="item right">
-					<i class="sign in icon" aria-hidden="true"></i>
-					Login
-				</a>
-				{% endif %}
-			</div>
-		</div>
-	</div>
-	
-	<div class="ui segment container main">
-		{% block body %}{% endblock %}
-	</div>
+                    <i class="user icon"></i>
+                    Profile
+                </a>
+                
+                <a href="{{ path('logout') }}" class="item right">
+                    <i class="sign in icon" aria-hidden="true"></i>
+                    Logout
+                </a>
+                {% else %}
+                <a href="{{ path('registration') }}" class="item right">
+                    <i class="user plus icon" aria-hidden="true"></i>
+                    Register
+                </a>
+                
+                <a href="{{ path('login') }}" class="item right">
+                    <i class="sign in icon" aria-hidden="true"></i>
+                    Login
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="ui segment container main">
+        {% block body %}{% endblock %}
+    </div>
 </body>
 </html>

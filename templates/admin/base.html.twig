@@ -1,24 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% set route = app.request.attributes.get('_route') %}
-
 {% block body %}
 <div class="ui grid">
-	<div class="four wide column">
-		<div class="ui vertical fluid tabular menu">
-			<a href="{{ path('admin') }}" class="{% if route == 'admin' %}active {% endif %} item">
-				Dashboard
-			</a>
-			<a href="{{ path('admin_user') }}" class="{% if route starts with 'admin_user' %}active {% endif %} item">
-				Users
-			</a>
-			<a href="{{ path('admin_category') }}" class="{% if route starts with 'admin_category' %}active {% endif %} item">
-				Categories
-			</a>
-		</div>
-	</div>
-
-	<div class="twelve wide stretched column">
+	<div class="sixteen wide stretched column">
 		<div class="ui segment">
 			{% block subbody %}
 			{% endblock %}
