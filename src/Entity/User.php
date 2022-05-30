@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 * @UniqueEntity(fields="email", message="Email address already used !")
 * @UniqueEntity(fields="username", message="Username already used !")
 */
-class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
 	/**
 	* @ORM\Id
@@ -218,22 +218,6 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
 				// Nous n'avons pas besoin de cette methode car nous n'utilions pas de plainPassword
 				// Mais elle est obligatoire car comprise dans l'interface UserInterface
 				// $this->plainPassword = null;
-			}
-			
-			/**
-			* {@inheritdoc}
-			*/
-			public function serialize(): string
-			{
-				return serialize([$this->id, $this->username, $this->password]);
-			}
-			
-			/**
-			* {@inheritdoc}
-			*/
-			public function unserialize($serialized): void
-			{
-				[$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
 			}
 			
 			public function getUserIdentifier(): string

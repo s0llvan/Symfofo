@@ -48,7 +48,7 @@ class Topic
 	private $title;
 	
 	/**
-	* @ORM\OneToMany(targetEntity=Post::class, mappedBy="topic", orphanRemoval=true)
+	* @ORM\OneToMany(targetEntity=Post::class, mappedBy="topic", orphanRemoval=true, fetch="EAGER")
 	* @ORM\OrderBy({"id" = "DESC"})
 	*/
 	private $posts;
