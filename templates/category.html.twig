@@ -75,6 +75,8 @@
 		</div>
 	</div>
 
+    {% if category.topics|length > 10 %}
 	{{ knp_pagination_render(topics) }}
+    {% endif %}
 </div>
 {% endblock %}
