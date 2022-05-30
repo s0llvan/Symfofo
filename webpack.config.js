@@ -3,7 +3,7 @@ const Encore = require('@symfony/webpack-encore');
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
-	Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
 Encore
@@ -50,13 +50,13 @@ Encore
 .enableVersioning(Encore.isProduction())
 
 .configureBabel((config) => {
-	config.plugins.push('@babel/plugin-proposal-class-properties');
+    config.plugins.push('@babel/plugin-proposal-class-properties');
 })
 
 // enables @babel/preset-env polyfills
 .configureBabelPresetEnv((config) => {
-	config.useBuiltIns = 'usage';
-	config.corejs = 3;
+    config.useBuiltIns = 'usage';
+    config.corejs = 3;
 })
 
 // enables Sass/SCSS support
@@ -76,17 +76,38 @@ Encore
 .autoProvidejQuery()
 
 .copyFiles({
-	from: './assets/images',
-	
-	// optional target path, relative to the output dir
-	to: 'images/[path][name].[ext]',
-	
-	// if versioning is enabled, add the file hash too
-	//to: 'images/[path][name].[hash:8].[ext]',
-	
-	// only copy files matching this pattern
-	//pattern: /\.(png|jpg|jpeg)$/
+    from: './assets/images',
+    
+    // optional target path, relative to the output dir
+    to: 'images/[path][name].[ext]',
+    
+    // if versioning is enabled, add the file hash too
+    //to: 'images/[path][name].[hash:8].[ext]',
+    
+    // only copy files matching this pattern
+    //pattern: /\.(png|jpg|jpeg)$/
 })
+
+.copyFiles({
+    from: 'node_modules/tinymce/skins',
+    to: 'skins/[path]/[name].[ext]'
+})
+
+.copyFiles({
+    from: 'node_modules/tinymce/themes',
+    to: 'themes/[path]/[name].[ext]'
+})
+
+.copyFiles({
+    from: 'node_modules/tinymce/models',
+    to: 'models/[path]/[name].[ext]'
+})
+
+.copyFiles({
+    from: 'node_modules/tinymce/icons',
+    to: 'icons/[path]/[name].[ext]'
+})
+
 ;
 
 module.exports = Encore.getWebpackConfig();

@@ -14,13 +14,27 @@
 <h2 class="ui header">Forum</h2>
 
 <h4 class="ui top attached header inverted">
-	{{ category.name }}
+    {{ category.name }}
 </h4>
 
 
 <div class="ui attached segment">
-	<div class="ui form">
-		{{ form(form) }}
-	</div>
+    <div class="ui form">
+        {{ form_start(form) }}
+        
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+            
+            <div class="col-md-12">
+                {{ form_label(form.message) }}
+                {{ form_widget(form.message) }}
+            </div>
+        </div>
+        
+        {{ form_end(form) }}
+    </div>
 </div>
 {% endblock %}
