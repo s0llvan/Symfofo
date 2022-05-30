@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
 * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 * @UniqueEntity(fields="email", message="Email address already used !")
 * @UniqueEntity(fields="username", message="Username already used !")
 */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInterface
 {
 	/**
 	* @ORM\Id
@@ -236,7 +236,7 @@ class User implements UserInterface, \Serializable
 				[$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
 			}
 			
-			public function getUserIdentifier()
+			public function getUserIdentifier(): string
 			{
 				return $this->username;
 			}
