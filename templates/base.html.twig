@@ -25,12 +25,17 @@
 			</a>
 			<div class="right menu">
 				{% if app.user %}
-				{% if is_granted("ROLE_USER") %}
+				{% if is_granted("ROLE_ADMIN") %}
 				<a class="item" href="{{ path('admin') }}">
 					<i class="cogs icon"></i>
 					Administration
 				</a>
 				{% endif %}
+
+                <a class="item" href="{{ path('profile') }}">
+					<i class="user icon"></i>
+					Profile
+				</a>
 				
 				<a href="{{ path('logout') }}" class="item right">
 					<i class="sign in icon" aria-hidden="true"></i>

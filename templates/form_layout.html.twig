@@ -22,5 +22,9 @@
 	<div class="ui left input">
 		<input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 	</div>
+
+    {% for error in errors %}
+    <p>{{ error.message }}</p>
+    {% endfor %}
 </div>
 {% endblock form_widget_simple %}
