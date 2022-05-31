@@ -14,89 +14,103 @@
 <h2 class="ui header">Forum</h2>
 
 <h4 class="ui top attached header inverted">
-	{{ topic.title }}
+    {{ topic.title }}
 </h4>
 
 <div class="ui attached segment">
-	<div class="ui grid stackable">
-		<div class="segment ui three wide column" style="margin:20px;">
-			<div class="content">
-				<div class="header">
-					<div class="ui fluid image small centered rounded">
-						<img src="{{ asset('build/images/square-image.png') }}" alt="Default user picture">
-					</div>
-				</div>
-				<h3 class="center aligned">{{ topic.author.username }}</h3>
-			</div>
-			<br>
-		</div>
-		<div class="twelve wide column" style="padding:20px;">			
-			<div class="segment">
-				{{ topic.message|raw }}
-			</div>
-			
-			<div class="ui divider" style="margin-top:100px;"></div>
-			
-			<div class="segment">
-				Created date : <strong>{{ topic.createdAt|date('H:s, d M Y') }}</strong>
-			</div>
-		</div>
-	</div>
-	
-	{% if app.user %}
-	<h3 class="ui header right aligned">
-		{% if app.user == topic.author %}
-		<button class="ui button">
-			<i class="pencil icon" aria-hidden="true"></i>
-			Edit
-		</button>
-		{% endif %}
-		<button class="ui button">
-			<i class="reply all icon" aria-hidden="true"></i>
-			Reply
-		</button>
-	</h3>
-	{% endif %}
-	
-	{% for post in posts %}
-	<div class="ui attached segment">
-		<div class="ui grid stackable">
-			<div class="segment ui three wide column" style="margin:20px;">
-				<div class="content">
-					<div class="header">
-						<div class="ui fluid image small centered rounded">
-							<img src="{{ asset('build/images/square-image.png') }}" alt="Default user picture">
-						</div>
-					</div>
-					<h3 class="ui center aligned header">{{ post.author.username }}</h3>
-				</div>
-			</div>
-			<div class="twelve wide column" style="padding:20px;">
-				<div class="segment">
-					{{ post.message }}
-				</div>
-				
-				<div class="ui divider" style="margin-top:100px;"></div>
-				
-				<div class="segment">
-					Created date : <strong>{{ topic.createdAt|date('H:s, d M Y') }}</strong>
-				</div>
-			</div>
-		</div>
-		
-		{% if app.user %}
-		<h3 class="ui header right aligned">
-			<button class="ui button">
-				<i class="reply all icon" aria-hidden="true"></i>
-				Reply
-			</button>
-		</h3>
-		{% endif %}
-	</div>
-	{% endfor %}
-
+    <div class="ui grid stackable topic">
+        <div class="segment ui three wide column" style="margin:20px;">
+            <div class="content">
+                <div class="header">
+                    <div class="ui fluid image small centered rounded">
+                        <img src="{{ asset('build/images/square-image.png') }}" alt="Default user picture">
+                    </div>
+                </div>
+                <h3 class="center aligned">{{ topic.author.username }}</h3>
+            </div>
+            <br>
+        </div>
+        <div class="twelve wide column" style="padding:20px;">			
+            <div class="segment">
+                {{ topic.message|raw }}
+            </div>
+            
+            {% if topic.author.signature %}
+            <div class="ui divider"></div>
+            <div class="signature">
+                {{ topic.author.signature }}
+            </div>
+            {% endif %}
+            
+            <div class="ui divider"></div>
+            
+            <div class="segment">
+                Created date : <strong>{{ topic.createdAt|date('H:s, d M Y') }}</strong>
+            </div>
+        </div>
+    </div>
+    
+    {% if app.user %}
+    <h3 class="ui header right aligned">
+        {% if app.user == topic.author %}
+        <button class="ui button">
+            <i class="pencil icon" aria-hidden="true"></i>
+            Edit
+        </button>
+        {% endif %}
+        <button class="ui button">
+            <i class="reply all icon" aria-hidden="true"></i>
+            Reply
+        </button>
+    </h3>
+    {% endif %}
+    
+    {% for post in posts %}
+    <div class="ui attached segment post">
+        <div class="ui grid stackable">
+            <div class="segment ui three wide column" style="margin:20px;">
+                <div class="content">
+                    <div class="header">
+                        <div class="ui fluid image small centered rounded">
+                            <img src="{{ asset('build/images/square-image.png') }}" alt="Default user picture">
+                        </div>
+                    </div>
+                    <h3 class="ui center aligned header">{{ post.author.username }}</h3>
+                </div>
+            </div>
+            <div class="twelve wide column" style="padding:20px;">
+                <div class="segment">
+                    {{ post.message }}
+                </div>
+                
+                {% if post.author.signature %}
+                <div class="ui divider"></div>
+                <div class="signature">
+                    {{ post.author.signature }}
+                </div>
+                {% endif %}
+                
+                <div class="ui divider"></div>
+                
+                <div class="segment">
+                    Created date : <strong>{{ topic.createdAt|date('H:s, d M Y') }}</strong>
+                </div>
+            </div>
+        </div>
+        
+        {% if app.user %}
+        <h3 class="ui header right aligned">
+            <button class="ui button">
+                <i class="reply all icon" aria-hidden="true"></i>
+                Reply
+            </button>
+        </h3>
+        {% endif %}
+    </div>
+    {% endfor %}
+    
     {% if topic.posts|length > 6 %}
-	{{ knp_pagination_render(posts) }}
+    {{ knp_pagination_render(posts) }}
     {% endif %}
 </div>
 {% endblock %}

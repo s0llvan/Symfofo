@@ -98,6 +98,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 			* @ORM\OneToMany(targetEntity=Post::class, mappedBy="author")
 			*/
 			private $posts;
+
+   /**
+    * @ORM\Column(type="text", nullable=true)
+    */
+   private $signature;
 			
 			public function __construct()
 			{
@@ -308,5 +313,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 				
 				return $this;
 			}
+
+   public function getSignature(): ?string
+   {
+       return $this->signature;
+   }
+
+   public function setSignature(?string $signature): self
+   {
+       $this->signature = $signature;
+
+       return $this;
+   }
 		}
 		

@@ -23,6 +23,8 @@ class AppFixtures extends Fixture
 	
 	public function load(ObjectManager $manager): void
 	{
+        $faker = Factory::create();
+
 		$roles = [
 			'Super Administrator' => 'ROLE_SUPER_ADMIN',
 			'Administrator' => 'ROLE_ADMIN',
@@ -60,6 +62,7 @@ class AppFixtures extends Fixture
 			$user->setEmail($email);
 			$user->setEmailConfirmed(true);
 			$user->setRole($rolesTab[$i]);
+            $user->setSignature($faker->sentence());
 			
 			$manager->persist($user);
 			
@@ -69,8 +72,6 @@ class AppFixtures extends Fixture
 		}
 		
 		$parentCategories = [];
-		
-		$faker = Factory::create();
 		
 		for ($i=0; $i < 5; $i++) { 
 			$category = new Category();

@@ -3,28 +3,35 @@
 
 {% block form_errors %}
 <div class="field {% if errors|length > 0 %} error {% endif %}">
-	{% endblock %}
-	{% block form_label %}
-	{% if not compound %}
-	{% set label_attr = label_attr|merge({'for': id}) %}
-	{% endif %}
-	{% if required %}
-	{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-	{% endif %}
-	{% if label is empty %}
-	{% set label = name|humanize %}
-	{% endif %}
-	{% if label != 'Token' %}
-	<label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
-	{% endif %}
-	{% endblock form_label %}
-	
-	<div class="ui left input">
-		<input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-	</div>
-
+    {% endblock %}
+    {% block form_label %}
+    {% if not compound %}
+    {% set label_attr = label_attr|merge({'for': id}) %}
+    {% endif %}
+    {% if required %}
+    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+    {% endif %}
+    {% if label is empty %}
+    {% set label = name|humanize %}
+    {% endif %}
+    {% if label != 'Token' %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+    {% endif %}
+    {% endblock form_label %}
+    
+    <div class="ui left input">
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    </div>
+    
     {% for error in errors %}
     <p>{{ error.message }}</p>
     {% endfor %}
 </div>
 {% endblock form_widget_simple %}
+
+{%- block textarea_widget -%}
+<div class="field">
+    <label for="">{{ label|trans({}, translation_domain) }}</label>
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+</div>
+{%- endblock textarea_widget -%}

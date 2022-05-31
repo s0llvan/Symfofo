@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
@@ -34,6 +35,9 @@ class ProfileType extends AbstractType
                 'second_options' => ['label' => 'New password confirmation'],
                 'mapped' => false,
                 'required' => false
+            ])
+            ->add('signature', TextareaType::class, [
+                'label' => 'Signature'
             ])
             ->add('save', SubmitType::class, [
 				'attr' => [
