@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Symfofo{% endblock %}</title>
@@ -20,25 +20,25 @@
             </a>
             
             <a  href="{{ path('index') }}" class="item">
-                <i class="file alternate icon" aria-hidden="true"></i>
+                <em class="file alternate icon" aria-hidden="true"></em>
                 Forums
             </a>
             <div class="right menu">
                 {% if app.user %}
                 {% if is_granted("ROLE_ADMIN") %}
                 <div class="ui simple dropdown item right">
-                    <i class="wrench icon" aria-hidden="true"></i> Administration <i class="dropdown icon"></i>
+                    <em class="wrench icon" aria-hidden="true"></em> Administration <em class="dropdown icon"></em>
                     <div class="menu">
                         <a class="item" href="{{ path('admin') }}">
-                            <i class="tachometer alternate icon" aria-hidden="true"></i>
+                            <em class="tachometer alternate icon" aria-hidden="true"></em>
                             Dashboard
                         </a>
                         <a class="item" href="{{ path('admin_user') }}">
-                            <i class="users icon" aria-hidden="true"></i>
+                            <em class="users icon" aria-hidden="true"></em>
                             Users
                         </a>
                         <a class="item" href="{{ path('admin_category') }}">
-                            <i class="folder icon" aria-hidden="true"></i>
+                            <em class="folder icon" aria-hidden="true"></em>
                             Categories
                         </a>
                     </div>
@@ -46,22 +46,22 @@
                 {% endif %}
                 
                 <a class="item" href="{{ path('profile') }}">
-                    <i class="user icon"></i>
+                    <em class="user icon"></em>
                     Profile
                 </a>
                 
                 <a href="{{ path('logout') }}" class="item right">
-                    <i class="sign in icon" aria-hidden="true"></i>
+                    <em class="sign in icon" aria-hidden="true"></em>
                     Logout
                 </a>
                 {% else %}
                 <a href="{{ path('registration') }}" class="item right">
-                    <i class="user plus icon" aria-hidden="true"></i>
+                    <em class="user plus icon" aria-hidden="true"></em>
                     Register
                 </a>
                 
                 <a href="{{ path('login') }}" class="item right">
-                    <i class="sign in icon" aria-hidden="true"></i>
+                    <em class="sign in icon" aria-hidden="true"></em>
                     Login
                 </a>
                 {% endif %}

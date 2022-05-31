@@ -19,7 +19,6 @@ class NewTopicType extends AbstractType
 			'class' => 'ui button primary'
 			]
 		]);
-		;
 	}
 	
 	public function configureOptions(OptionsResolver $resolver): void

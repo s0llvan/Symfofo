@@ -16,11 +16,11 @@ class ProfileTestControllerTest extends WebTestCase
 
         $client->loginUser($testUser);
 
-        $crawler = $client->request('GET', '/profile');
+        $client->request('GET', '/profile');
 
         $this->assertResponseIsSuccessful();
 
-        $crawler = $client->submitForm('Save', [
+        $client->submitForm('Save', [
             'profile[email]' => 'admin@local.host',
         ]);
     }

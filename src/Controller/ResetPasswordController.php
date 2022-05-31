@@ -29,7 +29,6 @@ class ResetPasswordController extends AbstractController
     #[Route('/reset-password', name: 'reset_password')]
 	public function index(Request $request, UserRepository $userRepository, ManagerRegistry $managerRegistry): Response
 	{
-		$session = $request->getSession();
 		$form = $this->createForm(ResetPasswordType::class);
 		$form->handleRequest($request);
 		
@@ -62,8 +61,8 @@ class ResetPasswordController extends AbstractController
 					$entityManager->flush();
 					
 					$confirmationLink = $this->generateUrl('reset_password_confirmation', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
-					dump($confirmationLink);
-					$message = (new TemplatedEmail())
+
+                    $message = (new TemplatedEmail())
 					->subject('Symfofo - Reset password')
 					->from('no-reply@symfofo.fr')
 					->to($user->getEmail())
