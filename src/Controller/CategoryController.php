@@ -12,10 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategoryController extends AbstractController
 {
-    /**
-     * @Route("/category/{id}", name="category")
-     */
-    public function index(Request $request, TopicRepository $topicRepository, Category $category, PaginatorInterface $paginatorInterface): Response
+    #[Route('/category/{id}', name: 'category')]
+    public function index(Request $request, Category $category, PaginatorInterface $paginatorInterface): Response
     {
 		$topics = $paginatorInterface->paginate(
             $category->getTopics(),

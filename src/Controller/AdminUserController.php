@@ -23,9 +23,7 @@ class AdminUserController extends AbstractController
 		$this->managerRegistry = $managerRegistry;
 	}
 	
-	/**
-	* @Route("/admin/users", name="admin_user")
-	*/
+    #[Route('/admin/users', name: 'admin_user')]
 	public function index(Request $request, UserRepository $userRepository, PaginatorInterface $paginatorInterface): Response
 	{
 		$users = $paginatorInterface->paginate(
@@ -39,9 +37,7 @@ class AdminUserController extends AbstractController
 		]);
 	}
 	
-	/**
-	* @Route("/admin/users/{id}", name="admin_user_edit", requirements={"id"="\d+"})
-	*/
+    #[Route('/admin/users/{id}', name: 'admin_user_edit', requirements: ['id' => '\d+'])]
 	public function edit(Request $request, User $user): Response
 	{
 		$form = $this->createForm(UserAdminType::class, $user, [
@@ -65,9 +61,7 @@ class AdminUserController extends AbstractController
 		]);
 	}
 	
-	/**
-	* @Route("/admin/users/create", name="admin_user_create")
-	*/
+    #[Route('/admin/users/create', name: 'admin_user_create')]
 	public function create(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface): Response
 	{
 		$user = new User();
@@ -92,9 +86,7 @@ class AdminUserController extends AbstractController
 		]);
 	}
 	
-	/**
-	* @Route("/admin/users/{id}/delete", name="admin_user_delete")
-	*/
+    #[Route('/admin/users/{id}/delete', name: 'admin_user_delete')]
 	public function delete(User $user): Response
 	{
 		$this->managerRegistry->getManager()->remove($user);

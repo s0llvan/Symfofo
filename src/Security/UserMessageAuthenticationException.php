@@ -13,7 +13,7 @@ class UserMessageAuthenticationException extends AuthenticationException
 		$this->message = $message;
 	}
 
-	public function getMessageKey()
+	public function getMessageKey(): string
 	{
 		return $this->message;
 	}

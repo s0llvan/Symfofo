@@ -14,9 +14,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class TopicController extends AbstractController
 {
-	/**
-	* @Route("/topic/{id}", name="topic")
-	*/
+    #[Route('/topic/{id}', name: 'topic')]
 	public function index(Request $request, ManagerRegistry $managerRegistry, PaginatorInterface $paginatorInterface, Topic $topic): Response
 	{
 		$topic->increaseView();
@@ -36,9 +34,7 @@ class TopicController extends AbstractController
 		]);
 	}
 	
-	/**
-	* @Route("/topic/{id}/create", name="new_topic")
-	*/
+    #[Route('/topic/{id}/create', name: 'new_topic')]
 	public function create(ManagerRegistry $managerRegistry, Request $request, Category $category): Response
 	{
 		$topic = new Topic();

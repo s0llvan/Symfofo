@@ -21,9 +21,7 @@ class AdminCategoryController extends AbstractController
 		$this->managerRegistry = $managerRegistry;
 	}
 	
-	/**
-	* @Route("/admin/categories", name="admin_category")
-	*/
+    #[Route('/admin/categories', name: 'admin_category')]
 	public function index(CategoryRepository $categoryRepository, Request $request, PaginatorInterface $paginatorInterface): Response
 	{
 		$category = new Category();
@@ -49,9 +47,7 @@ class AdminCategoryController extends AbstractController
 		]);
 	}
 
-	/**
-	* @Route("/admin/categories/create/{id}", name="admin_category_create", defaults={"id": null})
-	*/
+    #[Route('/admin/categories/create', name: 'admin_category_create')]
 	public function create(Request $request, Category $parentCategory = null): Response
 	{
 		$category = new Category();
@@ -79,9 +75,7 @@ class AdminCategoryController extends AbstractController
 		]);
 	}
 	
-	/**
-	* @Route("/admin/categories/{id}/edit", name="admin_category_edit")
-	*/
+    #[Route('/admin/categories/{id}/edit', name: 'admin_category_edit')]
 	public function edit(Request $request, Category $category): Response
 	{
 		$form = $this->createForm(CategoryAdminType::class, $category, [
@@ -103,9 +97,7 @@ class AdminCategoryController extends AbstractController
 		]);
 	}
 	
-	/**
-	* @Route("/admin/categories/{id}", name="admin_category_show")
-	*/
+    #[Route('/admin/categories/{id}', name: 'admin_category_show')]
 	public function show(Request $request, Category $category): Response
 	{
 		$newCategory = new Category();
@@ -126,9 +118,7 @@ class AdminCategoryController extends AbstractController
 		]);
 	}
 	
-	/**
-	* @Route("/admin/categories/{id}/delete", name="admin_category_delete")
-	*/
+    #[Route('/admin/categories/{id}/delete', name: 'admin_category_delete')]
 	public function delete(CategoryRepository $categoryRepository, Category $category): Response
 	{
 		if($category->getParent() == null) {

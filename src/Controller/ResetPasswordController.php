@@ -26,9 +26,7 @@ class ResetPasswordController extends AbstractController
 		$this->mailer = $mailer;
 	}
 
-	/**
-	* @Route("/reset-password", name="reset_password")
-	*/
+    #[Route('/reset-password', name: 'reset_password')]
 	public function index(Request $request, UserRepository $userRepository, ManagerRegistry $managerRegistry): Response
 	{
 		$session = $request->getSession();
@@ -91,9 +89,7 @@ class ResetPasswordController extends AbstractController
 		]);
 	}
 	
-	/**
-	* @Route("/reset-password/{token}", name="reset_password_confirmation")
-	*/
+    #[Route('/reset-password/{token}', name: 'reset_password_confirmation')]
 	public function registerConfirmationAction(Request $request, string $token, UserRepository $userRepository, UserPasswordHasherInterface $passwordEncoder, ManagerRegistry $managerRegistry): Response
 	{
 		if (!$user = $userRepository->findOneBy([
