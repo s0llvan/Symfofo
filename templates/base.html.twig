@@ -20,7 +20,6 @@
             </a>
             
             <a  href="{{ path('index') }}" class="item">
-                <em class="file alternate icon" aria-hidden="true"></em>
                 Forums
             </a>
             <div class="right menu">
@@ -29,16 +28,12 @@
                 <div class="ui simple dropdown item right">
                     <em class="wrench icon" aria-hidden="true"></em> Administration <em class="dropdown icon"></em>
                     <div class="menu">
-                        <a class="item" href="{{ path('admin') }}">
-                            <em class="tachometer alternate icon" aria-hidden="true"></em>
-                            Dashboard
-                        </a>
                         <a class="item" href="{{ path('admin_user') }}">
-                            <em class="users icon" aria-hidden="true"></em>
+                            <em class="fa-solid fa-users"></em>
                             Users
                         </a>
                         <a class="item" href="{{ path('admin_category') }}">
-                            <em class="folder icon" aria-hidden="true"></em>
+                            <em class="fa-solid fa-folder"></em>
                             Categories
                         </a>
                     </div>
@@ -46,22 +41,22 @@
                 {% endif %}
                 
                 <a class="item" href="{{ path('profile') }}">
-                    <em class="user icon"></em>
+                    <em class="fa-solid fa-user"></em>
                     Profile
                 </a>
                 
                 <a href="{{ path('logout') }}" class="item right">
-                    <em class="sign in icon" aria-hidden="true"></em>
+                    <em class="fa-solid fa-right-from-bracket"></em>
                     Logout
                 </a>
                 {% else %}
                 <a href="{{ path('registration') }}" class="item right">
-                    <em class="user plus icon" aria-hidden="true"></em>
+                    <em class="fa-solid fa-user-plus"></em>
                     Register
                 </a>
                 
                 <a href="{{ path('login') }}" class="item right">
-                    <em class="sign in icon" aria-hidden="true"></em>
+                    <em class="fa-solid fa-right-from-bracket"></em>
                     Login
                 </a>
                 {% endif %}
