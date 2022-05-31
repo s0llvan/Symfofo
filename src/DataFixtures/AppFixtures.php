@@ -84,7 +84,7 @@ class AppFixtures extends Fixture
 		}
 		
 		foreach($parentCategories as $parentCategory) {
-			for ($i=0; $i < rand(3,4); $i++) { 
+			for ($i=0; $i < 3; $i++) { 
 				$category = new Category();
 				$category->setName($faker->sentence(3));
 				$category->setDescription($faker->sentence(rand(6,10)));
@@ -92,7 +92,7 @@ class AppFixtures extends Fixture
 				
 				$manager->persist($category);
 				
-				for ($a=0; $a < rand(30,60); $a++) { 
+				for ($a=0; $a < 32; $a++) { 
 					$topic = new Topic();
 					$topic->setCategory($category);
 					$topic->setTitle($faker->sentence());
@@ -101,7 +101,7 @@ class AppFixtures extends Fixture
 					
 					$manager->persist($topic);
 					
-					for ($u=0; $u < rand(4,12); $u++) { 
+					for ($u=0; $u < 8; $u++) { 
 						$post = new Post();
 						$post->setMessage($faker->sentence(24));
 						$post->setTopic($topic);

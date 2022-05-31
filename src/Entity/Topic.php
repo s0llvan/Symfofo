@@ -8,59 +8,39 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
-/**
-* @ORM\Entity(repositoryClass=TopicRepository::class)
-* @HasLifecycleCallbacks
-*/
+#[ORM\Entity(repositoryClass:TopicRepository::class)]
+#[HasLifecycleCallbacks]
 class Topic
 {
-	/**
-	* @ORM\Id
-	* @ORM\GeneratedValue
-	* @ORM\Column(type="integer")
-	*/
+	#[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type:'integer')]
 	private $id;
 	
-	/**
-	* @ORM\ManyToOne(targetEntity=Category::class, inversedBy="topics")
-	* @ORM\JoinColumn(nullable=false)
-	*/
+    #[ORM\ManyToOne(targetEntity:Category::class, inversedBy:"topics")]
+    #[ORM\JoinColumn(nullable:false)]
 	private $category;
 	
-	/**
-	* @ORM\Column(type="text")
-	*/
+    #[ORM\Column(type:'text')]
 	private $message;
 	
-	/**
-	* @ORM\Column(type="datetime_immutable")
-	*/
+    #[ORM\Column(type:'datetime_immutable')]
 	private $createdAt;
 	
-	/**
-	* @ORM\Column(type="datetime_immutable")
-	*/
+    #[ORM\Column(type:'datetime_immutable')]
 	private $updatedAt;
 	
-	/**
-	* @ORM\Column(type="string", length=255)
-	*/
+    #[ORM\Column(type:'string', length:255)]
 	private $title;
 	
-	/**
-	* @ORM\OneToMany(targetEntity=Post::class, mappedBy="topic", orphanRemoval=true, fetch="EAGER")
-	* @ORM\OrderBy({"id" = "DESC"})
-	*/
+    #[ORM\OneToMany(targetEntity:Post::class, mappedBy:"topic", orphanRemoval:true, fetch:"EAGER")]
+    #[ORM\OrderBy(['id' => 'DESC'])]
 	private $posts;
 	
-	/**
-	* @ORM\Column(type="bigint")
-	*/
+    #[ORM\Column(type:'bigint')]
 	private $views;
 	
-	/**
-	* @ORM\ManyToOne(targetEntity=User::class, inversedBy="topics")
-	*/
+    #[ORM\ManyToOne(targetEntity:User::class, inversedBy:"topics")]
 	private $author;
 	
 	public function __construct()
@@ -164,10 +144,8 @@ class Topic
 		return $this;
 	}
 	
-	/**
-	* @ORM\PrePersist
-	* @ORM\PreUpdate
-	*/
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
 	public function updatedTimestamps(): void
 	{
 		$this->setUpdatedAt(new \DateTimeImmutable('now'));    
