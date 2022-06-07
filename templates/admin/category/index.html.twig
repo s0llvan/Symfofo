@@ -40,6 +40,12 @@
 </table>
 
 {% if categories|length > 10 %}
-{{ knp_pagination_render(categories) }}
+<div class="ui pagination menu">
+    {% for i in 1..(categories|length / 10)|round(0, 'ceil') %}
+    <a class="item {% if i == currentPage %}active{% endif %}" href="{{ path('admin_category', {'page': i}) }}">
+        {{ i }}
+    </a>
+    {% endfor %}
+</div>
 {% endif %}
 {% endblock %}
