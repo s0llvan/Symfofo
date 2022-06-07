@@ -15,7 +15,10 @@ class AccountController extends AbstractController
     #[Route('/account', name: 'account')]
     public function index(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $form = $this->createForm(AccountType::class, $this->getUser());
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm(AccountType::class, $user);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -24,10 +27,10 @@ class AccountController extends AbstractController
             
             if($plaintextPassword) {
                 $hashedPassword = $passwordHasher->hashPassword(
-                    $this->getUser(),
+                    $user,
                     $plaintextPassword
                 );
-                $this->getUser()->setPassword($hashedPassword);
+                $user->setPassword($hashedPassword);
                 
                 $this->addFlash('success', 'Your password have been successfully updated !');
             }

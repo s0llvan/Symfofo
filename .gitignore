@@ -27,3 +27,4 @@ yarn-error.log
 ###< phpunit/phpunit ###
 
 .scannerwork
+/public/uploads/profil/*

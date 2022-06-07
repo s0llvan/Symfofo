@@ -21,7 +21,7 @@ class ProfileTestControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('Save', [
-            'profile[email]' => 'admin@local.host',
+            'profile[signature]' => 'Lorem ipsum',
         ]);
     }
 }

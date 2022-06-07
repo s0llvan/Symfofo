@@ -25,15 +25,15 @@
                 {% if app.user %}
                 {% if is_granted("ROLE_ADMIN") %}
                 <div class="ui simple dropdown item right">
-                    <em class="wrench icon" aria-hidden="true"></em> Administration <em class="dropdown icon"></em>
+                    <em class="fa-solid fa-wrench" aria-hidden="true"></em> Administration <em class="dropdown icon"></em>
                     <div class="menu">
                         <a class="item" href="{{ path('admin_user') }}">
                             <em class="fa-solid fa-users"></em>
-                            Users
+                            Manage users
                         </a>
                         <a class="item" href="{{ path('admin_category') }}">
                             <em class="fa-solid fa-folder"></em>
-                            Categories
+                            Manage categories
                         </a>
                     </div>
                 </div>

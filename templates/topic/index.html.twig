@@ -94,7 +94,7 @@
             </div>
             <div class="twelve wide column" style="padding:20px;">
                 <div class="segment">
-                    {{ post.message }}
+                    {{ post.message|raw }}
                 </div>
                 
                 {% if post.author.signature %}
