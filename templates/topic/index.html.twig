@@ -57,6 +57,12 @@
     {% if app.user %}
     <h3 class="ui header right aligned">
         {% if app.user == topic.author %}
+        {% if topic.posts|length <= 0 %}
+        <a class="ui button" href="{{ path('delete_topic', {'id': topic.id}) }}">
+            <em class="fa-solid fa-trash"></em>
+            Delete
+        </a>
+        {% endif %}
         <button class="ui button">
             <em class="fa-solid fa-pencil"></em>
             Edit

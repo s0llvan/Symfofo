@@ -94,7 +94,7 @@ class RegistrationController extends AbstractController
 	}
 	
     #[Route('/register-confirmation/{token}', name: 'registration_confirmation')]
-	public function registerConfirmationAction(Request $request, $token, UserRepository $userRepository, ManagerRegistry $managerRegistry)
+	public function registerConfirmationAction($token, UserRepository $userRepository, ManagerRegistry $managerRegistry)
 	{
 		if ($user = $userRepository->findOneBy(['emailConfirmationToken' => $token])) {
 			
