@@ -41,6 +41,12 @@
 </table>
 
 {% if users|length > 10 %}
-{{ knp_pagination_render(users) }}
+<div class="ui pagination menu">
+    {% for i in 1..(users|length / 10)|round(0, 'ceil') %}
+    <a class="item {% if i == currentPage %}active{% endif %}" href="{{ path('admin_user', {'page': i}) }}">
+        {{ i }}
+    </a>
+    {% endfor %}
+</div>
 {% endif %}
 {% endblock %}

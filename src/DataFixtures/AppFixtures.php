@@ -70,6 +70,18 @@ class AppFixtures extends Fixture
 
 			$users[] = $user;
 		}
+
+        for ($i=0; $i < 12; $i++) { 
+            $user = new User();
+            $user->setUsername('user_' . $i);
+			$user->setPassword($this->passwordEncoder->hashPassword($user, 'password'));
+            $user->setEmail('user_' . $i . '@local.host');
+            $user->setEmailConfirmed(true);
+            $user->setRole($rolesTab[3]);
+            $user->setSignature($faker->sentence());
+			
+			$manager->persist($user);
+        }
 		
 		$parentCategories = [];
 		
