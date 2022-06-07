@@ -68,15 +68,15 @@
             Edit
         </button>
         {% endif %}
-        <button class="ui button">
+        <a class="ui button" href="{{ path('reply_topic', {'id': topic.id}) }}">
             <em class="fa-solid fa-reply"></em>
             Reply
-        </button>
+        </a>
     </h3>
     {% endif %}
     
     {% for post in posts %}
-    <div class="ui attached segment post">
+    <div class="ui attached segment post" id="post_{{ post.id }}">
         <div class="ui grid stackable">
             <div class="segment ui three wide column" style="margin:20px;">
                 <div class="content">
@@ -114,10 +114,10 @@
         
         {% if app.user %}
         <h3 class="ui header right aligned">
-            <button class="ui button">
+            <a class="ui button" href="{{ path('reply_topic', {'id': topic.id}) }}">
                 <em class="fa-solid fa-reply"></em>
                 Reply
-            </button>
+            </a>
         </h3>
         {% endif %}
     </div>

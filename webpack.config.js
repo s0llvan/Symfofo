@@ -26,6 +26,7 @@ Encore
 .addEntry('category', './assets/category.js')
 .addEntry('topic', './assets/topic.js')
 .addEntry('profile', './assets/profile.js')
+.addEntry('post', './assets/post.js')
 
 // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
 .enableStimulusBridge('./assets/controllers.json')

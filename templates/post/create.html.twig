@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post{% endblock %}
+
+{% block stylesheets %}
+{{ encore_entry_link_tags('post') }}
+{% endblock %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('post') }}
+{% endblock %}
+
+{% block body %}
+<h2 class="ui header">Forum</h2>
+
+<h4 class="ui top attached header inverted">
+    {{ topic.title }}
+</h4>
+
+
+<div class="ui attached segment">
+    <div class="ui form">
+        {{ form_start(form) }}
+        
+        <div class="row">            
+            <div class="col-md-12">
+                {{ form_label(form.message) }}
+                {{ form_widget(form.message) }}
+            </div>
+
+            <div class="col-md-12">
+                {{ form_widget(form.save) }}
+            </div>
+        </div>
+        
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
