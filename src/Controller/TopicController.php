@@ -7,37 +7,36 @@ use App\Entity\Post;
 use App\Entity\Topic;
 use App\Form\NewPostType;
 use App\Form\NewTopicType;
+use App\Repository\PostRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\PaginatorInterface;
 
 class TopicController extends AbstractController
 {
     #[Route('/topic/{id}', name: 'topic')]
-    public function index(Request $request, ManagerRegistry $managerRegistry, PaginatorInterface $paginatorInterface, Topic $topic): Response
+    public function index(Request $request, ManagerRegistry $managerRegistry, Topic $topic, PostRepository $postRepository): Response
     {
         $topic->increaseView();
         
         $entityManager = $managerRegistry->getManager();
         $entityManager->flush();
         
-        $posts = $paginatorInterface->paginate(
-            $topic->getPosts(),
-            $request->query->getInt('page', 1),
-            6
-        );
+        $currentPage = $request->query->get('page', 1);
+
+        $posts = $postRepository->findByTopic($topic->getId(), $currentPage, 6);
         
         return $this->render('topic/index.html.twig', [
             'topic' => $topic,
-            'posts' => $posts
+            'posts' => $posts,
+            'currentPage' => $currentPage
         ]);
     }
 
     #[Route('/topic/{id}/reply', name: 'reply_topic')]
-    public function reply(Topic $topic, Request $request, ManagerRegistry $managerRegistry, PaginatorInterface $paginatorInterface): Response
+    public function reply(Topic $topic, Request $request, ManagerRegistry $managerRegistry): Response
     {
         $post = new Post();
         $post->setTopic($topic);
@@ -51,9 +50,13 @@ class TopicController extends AbstractController
             $entityManager = $managerRegistry->getManager();
             $entityManager->persist($post);
             $entityManager->flush();
+
+            $lastPage = ceil(($topic->getPosts()->count() + 1) / 6);
             
             return $this->redirectToRoute('topic', [
-                'id' => $topic->getId()
+                'id' => $topic->getId(),
+                'page' => $lastPage,
+                '_fragment' => 'post_' . $post->getId()
             ]);
         }
 
@@ -99,6 +102,13 @@ class TopicController extends AbstractController
             $entityManager = $managerRegistry->getManager();
             $entityManager->remove($topic);
             $entityManager->flush();
+
+            $lastPage = ceil(($topic->getCategory()->getTopics()->count() - 1) / 10);
+
+            return $this->redirectToRoute('category', [
+                'id' => $categoryId,
+                'page' => $lastPage
+            ]);
         }
         
         return $this->redirectToRoute('category', [

@@ -9,8 +9,6 @@ use App\Form\ResetPasswordType;
 use App\Form\ResetPasswordNewType;
 use App\Repository\UserRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Defuse\Crypto\KeyProtectedByPassword;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Response;

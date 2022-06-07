@@ -124,7 +124,13 @@
     {% endfor %}
     
     {% if topic.posts|length > 6 %}
-    {{ knp_pagination_render(posts) }}
+    <div class="ui pagination menu">
+        {% for i in 1..(posts|length / 6)|round(0, 'ceil') %}
+        <a class="item {% if i == currentPage %}active{% endif %}" href="{{ path('topic', {'id': topic.id, 'page': i}) }}">
+            {{ i }}
+        </a>
+        {% endfor %}
+    </div>
     {% endif %}
 </div>
 {% endblock %}
