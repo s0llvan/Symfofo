@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Post;
 use App\Entity\Topic;
+use App\Form\EditTopicType;
 use App\Form\NewPostType;
 use App\Form\NewTopicType;
 use App\Repository\PostRepository;
@@ -89,6 +90,28 @@ class TopicController extends AbstractController
         
         return $this->render('topic/create.html.twig', [
             'category' => $category,
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/topic/{id}/edit', name: 'edit_topic')]
+    public function edit(Topic $topic, Request $request, ManagerRegistry $managerRegistry): Response
+    {
+        $form = $this->createForm(EditTopicType::class, $topic);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $managerRegistry->getManager();
+            $entityManager->persist($topic);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('topic', [
+                'id' => $topic->getId()
+            ]);
+        }
+
+        return $this->render('topic/edit.html.twig', [
+            'topic' => $topic,
             'form' => $form->createView()
         ]);
     }

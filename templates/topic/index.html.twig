@@ -63,10 +63,10 @@
             Delete
         </a>
         {% endif %}
-        <button class="ui button">
+        <a class="ui button" href="{{ path('edit_topic', {'id': topic.id}) }}">
             <em class="fa-solid fa-pencil"></em>
             Edit
-        </button>
+        </a>
         {% endif %}
         <a class="ui button" href="{{ path('reply_topic', {'id': topic.id}) }}">
             <em class="fa-solid fa-reply"></em>
