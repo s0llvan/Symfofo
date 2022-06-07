@@ -9,7 +9,6 @@
     {% block stylesheets %}{% endblock %}
     
     {{ encore_entry_script_tags('app') }}
-    
     {% block javascripts %}	{% endblock %}
 </head>
 <body>
@@ -43,6 +42,11 @@
                 <a class="item" href="{{ path('profile') }}">
                     <em class="fa-solid fa-user"></em>
                     Profile
+                </a>
+
+                <a class="item" href="{{ path('account') }}">
+                    <em class="fa-solid fa-gear"></em>
+                    Account
                 </a>
                 
                 <a href="{{ path('logout') }}" class="item right">

@@ -62,6 +62,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type:"text", nullable:true)]
     private $signature;
     
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $profilePictureFilename;
+    
     public function __construct()
     {
         $this->emailConfirmed = false;
@@ -274,6 +277,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSignature(?string $signature): self
     {
         $this->signature = $signature;
+        
+        return $this;
+    }
+    
+    public function getProfilePictureFilename(): ?string
+    {
+        return $this->profilePictureFilename;
+    }
+    
+    public function setProfilePictureFilename(?string $profilePictureFilename): self
+    {
+        $this->profilePictureFilename = $profilePictureFilename;
         
         return $this;
     }

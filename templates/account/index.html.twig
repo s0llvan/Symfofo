@@ -1,21 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profile{% endblock %}
-
-{% block stylesheets %}
-{{ encore_entry_link_tags('profile') }}
-{% endblock %}
+{% block title %}Account{% endblock %}
 
 {% form_theme form 'form_layout.html.twig' %}
 
 {% block body %}
 {{ form_start(form, {'attr': {'class': 'ui form'}}) }}
-{{ form_widget(form.profile_picture) }}
-{% if app.user.profilePictureFilename %}
-<img src="{{ asset('uploads/profil/' ~ app.user.profilePictureFilename) }}" alt="">
-{% endif %}
-{{ form_widget(form.delete_profile_picture) }}
-{{ form_widget(form.signature) }}
+{{ form_widget(form.email) }}
+{{ form_widget(form.new_password.first) }}
+{{ form_widget(form.new_password.second) }}
+{{ form_widget(form.password) }}
 {% for message in app.flashes('success') %}
 <div class="ui positive message transition">
     <p>{{ message }}</p>

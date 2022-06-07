@@ -23,7 +23,11 @@
             <div class="content">
                 <div class="header">
                     <div class="ui fluid image small centered rounded">
-                        <img src="{{ asset('build/images/square-image.png') }}" alt="Default user picture">
+                        {% if topic.author.profilePictureFilename %}
+                        <img src="{{ asset('uploads/profil/' ~ topic.author.profilePictureFilename) }}" alt="User profile picture">
+                        {% else %}
+                        <img src="{{ asset('build/images/square-image.png') }}" alt="Default user profile picture">
+                        {% endif %}
                     </div>
                 </div>
                 <h3 class="center aligned">{{ topic.author.username }}</h3>
@@ -72,7 +76,11 @@
                 <div class="content">
                     <div class="header">
                         <div class="ui fluid image small centered rounded">
-                            <img src="{{ asset('build/images/square-image.png') }}" alt="Default user picture">
+                            {% if post.author.profilePictureFilename %}
+                            <img src="{{ asset('uploads/profil/' ~ post.author.profilePictureFilename) }}" alt="User profile picture">
+                            {% else %}
+                            <img src="{{ asset('build/images/square-image.png') }}" alt="Default user profile picture">
+                            {% endif %}
                         </div>
                     </div>
                     <h3 class="ui center aligned header">{{ post.author.username }}</h3>
