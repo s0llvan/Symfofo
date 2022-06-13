@@ -13,6 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TopicController extends AbstractController
@@ -33,37 +34,6 @@ class TopicController extends AbstractController
             'topic' => $topic,
             'posts' => $posts,
             'currentPage' => $currentPage
-        ]);
-    }
-
-    #[Route('/topic/{id}/reply', name: 'reply_topic')]
-    public function reply(Topic $topic, Request $request, ManagerRegistry $managerRegistry): Response
-    {
-        $post = new Post();
-        $post->setTopic($topic);
-        $post->setAuthor($this->getUser());
-
-        $form = $this->createForm(NewPostType::class, $post);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->persist($post);
-            $entityManager->flush();
-
-            $lastPage = ceil(($topic->getPosts()->count() + 1) / 6);
-            
-            return $this->redirectToRoute('topic', [
-                'id' => $topic->getId(),
-                'page' => $lastPage,
-                '_fragment' => 'post_' . $post->getId()
-            ]);
-        }
-
-        return $this->render('post/create.html.twig', [
-            'topic' => $topic,
-            'form' => $form->createView()
         ]);
     }
     

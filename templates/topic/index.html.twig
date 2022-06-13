@@ -68,7 +68,7 @@
             Edit
         </a>
         {% endif %}
-        <a class="ui button" href="{{ path('reply_topic', {'id': topic.id}) }}">
+        <a class="ui button" href="{{ path('new_post', {'id': topic.id}) }}">
             <em class="fa-solid fa-reply"></em>
             Reply
         </a>
@@ -114,7 +114,13 @@
         
         {% if app.user %}
         <h3 class="ui header right aligned">
-            <a class="ui button" href="{{ path('reply_topic', {'id': topic.id}) }}">
+            {% if app.user == post.author %}
+            <a class="ui button" href="{{ path('edit_post', {'id': post.id}) }}">
+                <em class="fa-solid fa-pencil"></em>
+                Edit
+            </a>
+            {% endif %}
+            <a class="ui button" href="{{ path('new_post', {'id': topic.id}) }}">
                 <em class="fa-solid fa-reply"></em>
                 Reply
             </a>
