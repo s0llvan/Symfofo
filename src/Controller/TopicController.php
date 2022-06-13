@@ -9,11 +9,11 @@ use App\Form\EditTopicType;
 use App\Form\NewPostType;
 use App\Form\NewTopicType;
 use App\Repository\PostRepository;
+use App\Repository\TopicRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TopicController extends AbstractController
@@ -38,7 +38,7 @@ class TopicController extends AbstractController
     }
     
     #[Route('/topic/{id}/create', name: 'new_topic')]
-    public function create(ManagerRegistry $managerRegistry, Request $request, Category $category): Response
+    public function create(TopicRepository $topicRepository, Request $request, Category $category): Response
     {
         $topic = new Topic();
         $topic->setAuthor($this->getUser());
@@ -49,9 +49,7 @@ class TopicController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->persist($topic);
-            $entityManager->flush();
+            $topicRepository->add($topic, true);
             
             return $this->redirectToRoute('topic', [
                 'id' => $topic->getId()
@@ -65,15 +63,13 @@ class TopicController extends AbstractController
     }
 
     #[Route('/topic/{id}/edit', name: 'edit_topic')]
-    public function edit(Topic $topic, Request $request, ManagerRegistry $managerRegistry): Response
+    public function edit(Topic $topic, Request $request, TopicRepository $topicRepository): Response
     {
         $form = $this->createForm(EditTopicType::class, $topic);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->persist($topic);
-            $entityManager->flush();
+            $topicRepository->add($topic, true);
 
             return $this->redirectToRoute('topic', [
                 'id' => $topic->getId()
@@ -87,14 +83,12 @@ class TopicController extends AbstractController
     }
     
     #[Route('/topic/{id}/delete', name: 'delete_topic')]
-    public function delete(Topic $topic, ManagerRegistry $managerRegistry): Response
+    public function delete(Topic $topic, TopicRepository $topicRepository): Response
     {
         $categoryId = $topic->getCategory()->getId();
         
         if($this->getUser() == $topic->getAuthor() && $topic->getPosts()->count() <= 0) {
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->remove($topic);
-            $entityManager->flush();
+            $topicRepository->remove($topic, true);
 
             $lastPage = ceil(($topic->getCategory()->getTopics()->count() - 1) / 10);
 

@@ -30,15 +30,12 @@ class AdminCategoryController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            $this->managerRegistry->getManager()->persist($category);
-            $this->managerRegistry->getManager()->flush();
+            $categoryRepository->add($category, true);
         }
         
         $currentPage = $request->query->get('page', 1);
 
         $categories = $categoryRepository->findParentCategories($currentPage);
-        dump($categories);
         
         return $this->render('admin/category/index.html.twig', [
             'categories' => $categories,

@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Entity\Topic;
 use App\Form\EditPostType;
 use App\Form\NewPostType;
+use App\Repository\PostRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     #[Route('/topic/{id}/new-post', name: 'new_post')]
-    public function create(Topic $topic, Request $request, ManagerRegistry $managerRegistry): Response
+    public function create(Topic $topic, Request $request, PostRepository $postRepository): Response
     {
         $post = new Post();
         $post->setTopic($topic);
@@ -25,10 +26,8 @@ class PostController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->persist($post);
-            $entityManager->flush();
+
+            $postRepository->add($post, true);
             
             $lastPage = ceil(($topic->getPosts()->count() + 1) / 6);
             
@@ -46,15 +45,14 @@ class PostController extends AbstractController
     }
     
     #[Route('/post/{id}/edit', name: 'edit_post')]
-    public function edit(Post $post, Request $request, ManagerRegistry $managerRegistry): Response
+    public function edit(Post $post, Request $request, PostRepository $postRepository): Response
     {
         $form = $this->createForm(EditPostType::class, $post);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->persist($post);
-            $entityManager->flush();
+
+            $postRepository->add($post, true);
 
             $lastPage = ceil(($post->getTopic()->getPosts()->count() + 1) / 6);
 

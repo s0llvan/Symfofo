@@ -60,7 +60,7 @@ class AdminUserController extends AbstractController
 	}
 	
     #[Route('/admin/users/create', name: 'admin_user_create')]
-	public function create(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface): Response
+	public function create(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserRepository $userRepository): Response
 	{
 		$user = new User();
 		
@@ -72,9 +72,8 @@ class AdminUserController extends AbstractController
 			
 			$user->setPassword($userPasswordHasherInterface->hashPassword($user, $form->get('password')->getData()));
 			$user->setEmailConfirmed(true);
-			
-			$this->managerRegistry->getManager()->persist($user);
-			$this->managerRegistry->getManager()->flush();
+
+            $userRepository->add($user, true);
 			
 			$this->addFlash('success', 'Informations saved');
 		}
@@ -85,10 +84,12 @@ class AdminUserController extends AbstractController
 	}
 	
     #[Route('/admin/users/{id}/delete', name: 'admin_user_delete')]
-	public function delete(User $user): Response
+	public function delete(User $user, UserRepository $userRepository): Response
 	{
 		$this->managerRegistry->getManager()->remove($user);
 		$this->managerRegistry->getManager()->flush();
+
+        $userRepository->remove($user, true);
 		
 		return $this->redirectToRoute('admin_user');
 	}
